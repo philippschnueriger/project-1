@@ -20,41 +20,38 @@
             </div>
             <button>Filter Completed</button>
         </div>
-        <ul>
-            <li>
+        <ul id="todos"></ul>
+    </main>
+    <script src="./main.js" defer></script>
+    <script type="module">
+        import todoStore from "./todo-store.js"
+
+        const songListElement = document.querySelector("#todos");
+
+        function createSongsHtml(todos) {
+            return todos.map(todo =>
+            `<li>
                 <div class="status">
-                    <div class="due-date">in a day</div>
-                    <input type="checkbox">Open</input>
+                    <div class="due-date">${todo.duedate}</div>
+                    <input type="checkbox">${todo.status}</input>
                 </div>
                 <div class="content">
-                    <div class="name">Geburi von Sarah</div>
-                    <div class="description">Anrufen</div>
+                    <div class="name">${todo.name}</div>
+                    <div class="description">${todo.description}</div>
                 </div>
                 <div class="rating">
-                    <div class="importance">*****</div>
-                </div>
-                <div class="edit">
-                    <button >Edit</button>
-                </div>
-            </li>
-            <li>
-                <div class="status">
-                    <div class="due-date">in a day</div>
-                    <input type="checkbox">Open</input>
-                </div>
-                <div class="content">
-                    <div class="name">Geburi von Sarah</div>
-                    <div class="description">Anrufen</div>
-                </div>
-                <div class="rating">
-                    <div class="importance">*****</div>
+                    <div class="importance">${todo.priority}</div>
                 </div>
                 <div class="edit">
                     <button>Edit</button>
                 </div>
-            </li>
-        </ul>
-    </main>
-    <script src="./main.js" defer></script>
+            </li>`).join('');
+        }
+
+        function renderTodos(){
+            songListElement.innerHTML = createSongsHtml(todoStore.todos);
+        }
+        renderTodos()
+    </script>
   </body>
 </html>
