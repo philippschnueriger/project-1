@@ -56,3 +56,9 @@ li {
 .rating, .edit {
     justify-self: end;
 }
+form * {
+    width: 100%;
+}
+#status {
+    width: 16px;
+}

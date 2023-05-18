@@ -7,20 +7,44 @@
   </head>
   <body>
     <main>
-        <div class="menu">
-            <button>Create new todo</button>
-            <button type="button" id="theme-button">Toggle Style</button>
-        </div>
-        <div class="filter">
-            <div>
-                <button>Name</button>
-                <button>By Due Date</button>
-                <button>By Creation Date</button>
-                <button>By Importance</button>
+        <div class="overview">
+            <div class="menu">
+                <button>Create new todo</button>
+                <button type="button" id="theme-button">Toggle Style</button>
             </div>
-            <button>Filter Completed</button>
+            <div class="filter">
+                <div>
+                    <button>Name</button>
+                    <button>By Due Date</button>
+                    <button>By Creation Date</button>
+                    <button>By Importance</button>
+                </div>
+                <button>Filter Completed</button>
+            </div>
+            <ul id="todos"></ul>
         </div>
-        <ul id="todos"></ul>
+        <div class="newentry" hidden>
+            <form id="form" action="./index.html" action="POST">
+                <label for="title">Title</label>
+                <input id="title" type="text" name="title" />
+
+                <label for="importance">Importance</label>
+                <input id="importance" type="text" name="importance" />
+
+                <label for="duedate">Duedate</label>
+                <input id="duedate" type="date" name="duedate" />
+
+                <input id="status"type="checkbox">Finished</input><br />
+
+                <label for="description">Description</label>
+                <textarea id="description" name="description"></textarea>
+                <div class="menu">
+                    <button>Create</button>
+                    <button>Create & Overview</button>
+                    <button>Overview</button>
+                </div>
+              </form>
+        </div>
     </main>
     <script src="./main.js" defer></script>
     <script type="module">
