@@ -7,34 +7,53 @@
   </head>
   <body>
     <main>
-        <div class="menu-top">
+        <div class="menu">
             <button>Create new todo</button>
             <button>Toggle Style</button>
         </div>
-        <div class="filters">
-            <button>Name</button>
-            <button>By Due Date</button>
-            <button>By Creation Date</button>
-            <button>By Importance</button>
+        <div class="filter">
+            <div>
+                <button>Name</button>
+                <button>By Due Date</button>
+                <button>By Creation Date</button>
+                <button>By Importance</button>
+            </div>
             <button>Filter Completed</button>
         </div>
-        <div class="entries">
-            <div class="entry">
-                <div class="content">
-                    <div class="description top">
-                        <div class="due-date">in a day</div>
-                        <div class="name">Geburi von Sarah</div>
-                        <div class="importance">*****</div>
-                    </div>
-                    <div class="description bottom">
-                        <div class="status">Open</div>
-                        <div class="description">Anrufen</div>
-                    </div>
+        <ul>
+            <li>
+                <div class="status">
+                    <div class="due-date">in a day</div>
+                    <input type="checkbox">Open</input>
                 </div>
-                <button class="edit">Edit</button>
-                <hr />
-            </div>
-        </div>
+                <div class="content">
+                    <div class="name">Geburi von Sarah</div>
+                    <div class="description">Anrufen</div>
+                </div>
+                <div class="rating">
+                    <div class="importance">*****</div>
+                </div>
+                <div class="edit">
+                    <button >Edit</button>
+                </div>
+            </li>
+            <li>
+                <div class="status">
+                    <div class="due-date">in a day</div>
+                    <input type="checkbox">Open</input>
+                </div>
+                <div class="content">
+                    <div class="name">Geburi von Sarah</div>
+                    <div class="description">Anrufen</div>
+                </div>
+                <div class="rating">
+                    <div class="importance">*****</div>
+                </div>
+                <div class="edit">
+                    <button>Edit</button>
+                </div>
+            </li>
+        </ul>
     </main>
   </body>
 </html>

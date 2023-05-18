@@ -1,4 +1,42 @@
-.description > div {
-    display: inline;
+main {
+    height: 400px;
+    width: 700px;
+    margin: 64px auto 32px auto;
 }
 
+.menu, .filter {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 8px;
+}
+
+button {
+    height: 32px;
+    color: white;
+    background-color: #0A7AFF;
+    border: none;
+    border-radius: 6px;
+    margin: 2px;
+}
+
+button:hover{
+    background-color: #0B64D1;
+}
+
+
+ul {
+    padding: 0;
+}
+li {
+    display: grid;
+    grid-template-columns: 120px 1fr 120px 64px;
+    height: 56px;
+    border-bottom: 1px solid #4A4A48;
+    margin-bottom: 16px;
+}
+.due-date, .name {
+    margin-bottom: 8px;
+}
+.rating, .edit {
+    justify-self: end;
+}
