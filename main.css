@@ -1,3 +1,19 @@
+:root {
+    --background: white;
+    --color: #222;
+    }
+  
+.dark-theme {
+    --background: #222;
+    --color: white;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background: var(--background);
+    color: var(--color);
+}
+
 main {
     height: 400px;
     width: 700px;
