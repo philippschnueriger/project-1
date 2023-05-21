@@ -38,19 +38,27 @@ function createTodosHtml(todos) {
     `<li>
         <div class="status">
             <div class="due-date">${todo.duedate}</div>
-            <input type="checkbox">${todo.status}</input>
+            <input type="checkbox" class="checkbox" disabled>${todo.status ? "Completed" : "Open"}</input>
         </div>
         <div class="content">
             <div class="name">${todo.name}</div>
             <div class="description">${todo.description}</div>
         </div>
         <div class="rating">
-            <div class="importance">${todo.priority}</div>
+            <div class="importance">${displayPriority(todo.priority)}</div>
         </div>
         <div class="edit">
             <button class="edit-button" data-id="${todo.created}">Edit</button>
         </div>
     </li>`).join('');
+}
+
+function displayPriority(priority) {
+    let priorityText = "";
+    for (let i = 0; i < priority; i++) {
+        priorityText += "↯";
+    }
+    return priorityText;
 }
 
 function filterItemsBy(items, field) {
@@ -75,15 +83,16 @@ function renderTodos(todos){
     const todoListElement = document.querySelector("#todos");
     todoListElement.innerHTML = createTodosHtml(todos);
     const editButtons = document.querySelectorAll(".edit-button");
-    for (let editButton of editButtons) {
-        editButton.addEventListener("click", () => {
-            let id = Number(editButton.dataset.id);
-            console.log(id);
-            let todo = todos.filter(todo => todo.created === id);
+    const checkboxes = document.querySelectorAll(".checkbox");
+    for (let i=0; i < todos.length; i++) {
+        let id = Number(editButtons[i].dataset.id);
+        let todo = todos.filter(todo => todo.created === id);
+        editButtons[i].addEventListener("click", () => {
             console.log(todo)
             // TODO
         });
-    }
+        checkboxes[i].checked = todo[0].status;
+      } 
 };
 
 const form = document.querySelector("#form");
@@ -111,4 +120,4 @@ form.addEventListener("submit", event => {
     createButton.innerHTML="Update";
     renderTodos(todos);
 });
-renderTodos(todos)
+renderTodos(todos);
