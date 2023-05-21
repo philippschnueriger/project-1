@@ -15,7 +15,7 @@
             <div class="filter">
                 <div>
                     <button type="button" id="name-button">Name</button>
-                    <button>By Due Date</button>
+                    <button type="button" id="duedate-button">By Due Date</button>
                     <button type="button" id="created-button">By Creation Date</button>
                     <button type="button" id="importance-button">By Importance</button>
                 </div>
@@ -26,12 +26,12 @@
         <div class="new-entry hide">
             <form id="form" action="./index.html" action="POST">
                 <label for="title">Title</label>
-                <input id="title" type="text" name="title" />
+                <input id="title" type="text" name="title" required/>
 
                 <label for="importance">Importance</label>
-                <input id="importance" type="text" name="importance" />
+                <input id="importance" type="number" name="importance" required/>
 
-                <label for="duedate">Duedate</label>
+                <label for="duedate" required>Duedate</label>
                 <input id="duedate" type="date" name="duedate" />
 
                 <input id="status"type="checkbox">Finished</input><br />
@@ -39,9 +39,9 @@
                 <label for="description">Description</label>
                 <textarea id="description" name="description"></textarea>
                 <div class="menu">
-                    <button>Create</button>
-                    <button class="switch-view">Create & Overview</button>
-                    <button class="switch-view" >Overview</button>
+                    <button type="submit">Create</button>
+                    <button type="butotton" class="switch-view">Create & Overview</button>
+                    <button type="button" class="switch-view" >Overview</button>
                 </div>
               </form>
         </div>
@@ -55,7 +55,7 @@
         let filteredTodos = todos;
         const songListElement = document.querySelector("#todos");
         
-        function createSongsHtml(todos) {
+        function createTodosHtml(todos) {
             return todos.map(todo =>
             `<li>
                 <div class="status">
@@ -78,7 +78,6 @@
         const sortType = {
                 "string": (a, b) => a > b ? 1 : a < b ? -1 : 0,
                 "number": (a, b) => a - b,
-                "date": (a, b) => Date(b) - Date(a),
             }
 
         function filterItemsBy(items, filter) {
@@ -105,6 +104,11 @@
             sortedTodos = sortItemsBy(todos, "created");
             renderTodos(sortedTodos);
         });
+        const duedateButton = document.getElementById("duedate-button");
+        duedateButton.addEventListener("click", () => {
+            sortedTodos = sortItemsBy(todos, "created");
+            renderTodos(sortedTodos);
+        });
         const importanceButton = document.getElementById("importance-button");
         importanceButton.addEventListener("click", () => {
             sortedTodos = sortItemsBy(todos, "priority");
@@ -117,8 +121,30 @@
         });
 
         function renderTodos(todos){
-            songListElement.innerHTML = createSongsHtml(todos);
+            songListElement.innerHTML = createTodosHtml(todos);
         }
+
+        const form = document.querySelector("#form");
+        const title = document.querySelector("#title");
+        const importance = document.getElementById("importance");
+        const duedate = document.getElementById("duedate");
+        const status = document.getElementById("status");
+        const description = document.querySelector("#description");
+
+        form.addEventListener("submit", event => {
+            event.preventDefault();
+            const message = {
+                created: Date.now(),
+                name: title.value,
+                description: description.value,
+                priority: importance.value,
+                duedate: duedate.value,
+                status: status.value
+            }
+            console.log(message);
+            todos.push(message);
+            renderTodos(todos);
+        });
         renderTodos(todos)
     </script>
   </body>
