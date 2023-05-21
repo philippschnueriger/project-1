@@ -14,12 +14,12 @@
             </div>
             <div class="filter">
                 <div>
-                    <button>Name</button>
+                    <button type="button" id="name-button">Name</button>
                     <button>By Due Date</button>
-                    <button>By Creation Date</button>
-                    <button>By Importance</button>
+                    <button type="button" id="created-button">By Creation Date</button>
+                    <button type="button" id="importance-button">By Importance</button>
                 </div>
-                <button>Filter Completed</button>
+                <button type="button" id="status-button">Filter Completed</button>
             </div>
             <ul id="todos"></ul>
         </div>
@@ -50,8 +50,11 @@
     <script type="module">
         import todoStore from "./todo-store.js"
 
+        const todos = todoStore.todos;
+        let sortedTodos = todos;
+        let filteredTodos = todos;
         const songListElement = document.querySelector("#todos");
-
+        
         function createSongsHtml(todos) {
             return todos.map(todo =>
             `<li>
@@ -72,10 +75,51 @@
             </li>`).join('');
         }
 
-        function renderTodos(){
-            songListElement.innerHTML = createSongsHtml(todoStore.todos);
+        const sortType = {
+                "string": (a, b) => a > b ? 1 : a < b ? -1 : 0,
+                "number": (a, b) => a - b,
+                "date": (a, b) => Date(b) - Date(a),
+            }
+
+        function filterItemsBy(items, filter) {
+            if (filteredTodos === todos) {
+                filteredTodos = items.filter(todo => todo.status === true);
+                return filteredTodos;
+            } else {
+                return todos;
+            }
         }
-        renderTodos()
+
+        function sortItemsBy(items, sort) {
+            const sortFn = sortType[typeof (items[0][sort])];
+            return [...items].sort((a, b) => sortFn(a[sort], b[sort]));
+        }
+
+        const nameButton = document.getElementById("name-button");
+        nameButton.addEventListener("click", () => {
+            sortedTodos = sortItemsBy(todos, "name");
+            renderTodos(sortedTodos);
+        });
+        const createdButton = document.getElementById("created-button");
+        createdButton.addEventListener("click", () => {
+            sortedTodos = sortItemsBy(todos, "created");
+            renderTodos(sortedTodos);
+        });
+        const importanceButton = document.getElementById("importance-button");
+        importanceButton.addEventListener("click", () => {
+            sortedTodos = sortItemsBy(todos, "priority");
+            renderTodos(sortedTodos);
+        });
+        const statusButton = document.getElementById("status-button");
+        statusButton.addEventListener("click", () => {
+            filteredTodos = filterItemsBy(todos, "status");
+            renderTodos(filteredTodos);
+        });
+
+        function renderTodos(todos){
+            songListElement.innerHTML = createSongsHtml(todos);
+        }
+        renderTodos(todos)
     </script>
   </body>
 </html>
