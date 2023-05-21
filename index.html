@@ -10,16 +10,16 @@
         <div class="overview">
             <div class="menu">
                 <button class="switch-view">Create new todo</button>
-                <button type="button" id="theme-button">Toggle Style</button>
+                <button id="theme-button">Toggle Style</button>
             </div>
             <div class="filter">
                 <div>
-                    <button type="button" id="name-button">Name</button>
-                    <button type="button" id="duedate-button">By Due Date</button>
-                    <button type="button" id="created-button">By Creation Date</button>
-                    <button type="button" id="importance-button">By Importance</button>
+                    <button class="sort-button" data-sort-by="name">Name</button>
+                    <button class="sort-button" data-sort-by="duedate">By Due Date</button>
+                    <button class="sort-button" data-sort-by="created">By Creation Date</button>
+                    <button class="sort-button" data-sort-by="priority">By Importance</button>
                 </div>
-                <button type="button" id="status-button">Filter Completed</button>
+                <button class="filter-button" data-filter="status" id="status-button">Filter Completed</button>
             </div>
             <ul id="todos"></ul>
         </div>
@@ -39,113 +39,13 @@
                 <label for="description">Description</label>
                 <textarea id="description" name="description"></textarea>
                 <div class="menu">
-                    <button type="submit">Create</button>
-                    <button type="butotton" class="switch-view">Create & Overview</button>
+                    <button type="submit" id="create-button">Create</button>
+                    <button type="submit" class="switch-view">Create & Overview</button>
                     <button type="button" class="switch-view" >Overview</button>
                 </div>
               </form>
         </div>
     </main>
-    <script src="./main.js" defer></script>
-    <script type="module">
-        import todoStore from "./todo-store.js"
-
-        const todos = todoStore.todos;
-        let sortedTodos = todos;
-        let filteredTodos = todos;
-        const songListElement = document.querySelector("#todos");
-        
-        function createTodosHtml(todos) {
-            return todos.map(todo =>
-            `<li>
-                <div class="status">
-                    <div class="due-date">${todo.duedate}</div>
-                    <input type="checkbox">${todo.status}</input>
-                </div>
-                <div class="content">
-                    <div class="name">${todo.name}</div>
-                    <div class="description">${todo.description}</div>
-                </div>
-                <div class="rating">
-                    <div class="importance">${todo.priority}</div>
-                </div>
-                <div class="edit">
-                    <button>Edit</button>
-                </div>
-            </li>`).join('');
-        }
-
-        const sortType = {
-                "string": (a, b) => a > b ? 1 : a < b ? -1 : 0,
-                "number": (a, b) => a - b,
-            }
-
-        function filterItemsBy(items, filter) {
-            if (filteredTodos === todos) {
-                filteredTodos = items.filter(todo => todo.status === true);
-                return filteredTodos;
-            } else {
-                return todos;
-            }
-        }
-
-        function sortItemsBy(items, sort) {
-            const sortFn = sortType[typeof (items[0][sort])];
-            return [...items].sort((a, b) => sortFn(a[sort], b[sort]));
-        }
-
-        const nameButton = document.getElementById("name-button");
-        nameButton.addEventListener("click", () => {
-            sortedTodos = sortItemsBy(todos, "name");
-            renderTodos(sortedTodos);
-        });
-        const createdButton = document.getElementById("created-button");
-        createdButton.addEventListener("click", () => {
-            sortedTodos = sortItemsBy(todos, "created");
-            renderTodos(sortedTodos);
-        });
-        const duedateButton = document.getElementById("duedate-button");
-        duedateButton.addEventListener("click", () => {
-            sortedTodos = sortItemsBy(todos, "created");
-            renderTodos(sortedTodos);
-        });
-        const importanceButton = document.getElementById("importance-button");
-        importanceButton.addEventListener("click", () => {
-            sortedTodos = sortItemsBy(todos, "priority");
-            renderTodos(sortedTodos);
-        });
-        const statusButton = document.getElementById("status-button");
-        statusButton.addEventListener("click", () => {
-            filteredTodos = filterItemsBy(todos, "status");
-            renderTodos(filteredTodos);
-        });
-
-        function renderTodos(todos){
-            songListElement.innerHTML = createTodosHtml(todos);
-        }
-
-        const form = document.querySelector("#form");
-        const title = document.querySelector("#title");
-        const importance = document.getElementById("importance");
-        const duedate = document.getElementById("duedate");
-        const status = document.getElementById("status");
-        const description = document.querySelector("#description");
-
-        form.addEventListener("submit", event => {
-            event.preventDefault();
-            const message = {
-                created: Date.now(),
-                name: title.value,
-                description: description.value,
-                priority: importance.value,
-                duedate: duedate.value,
-                status: status.value
-            }
-            console.log(message);
-            todos.push(message);
-            renderTodos(todos);
-        });
-        renderTodos(todos)
-    </script>
+    <script type="module" src="./src/main.js" defer></script>
   </body>
 </html>
