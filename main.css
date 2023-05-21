@@ -8,6 +8,10 @@
     --color: white;
 }
 
+.hide {
+    display: none;
+}
+
 body {
     font-family: Arial, sans-serif;
     background: var(--background);

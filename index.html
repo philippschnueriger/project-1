@@ -9,7 +9,7 @@
     <main>
         <div class="overview">
             <div class="menu">
-                <button>Create new todo</button>
+                <button class="switch-view">Create new todo</button>
                 <button type="button" id="theme-button">Toggle Style</button>
             </div>
             <div class="filter">
@@ -23,7 +23,7 @@
             </div>
             <ul id="todos"></ul>
         </div>
-        <div class="newentry" hidden>
+        <div class="new-entry hide">
             <form id="form" action="./index.html" action="POST">
                 <label for="title">Title</label>
                 <input id="title" type="text" name="title" />
@@ -40,8 +40,8 @@
                 <textarea id="description" name="description"></textarea>
                 <div class="menu">
                     <button>Create</button>
-                    <button>Create & Overview</button>
-                    <button>Overview</button>
+                    <button class="switch-view">Create & Overview</button>
+                    <button class="switch-view" >Overview</button>
                 </div>
               </form>
         </div>
