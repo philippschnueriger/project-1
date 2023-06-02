@@ -9,38 +9,13 @@ themeButton.addEventListener("click", () => {
   document.body.classList.toggle("dark-theme");
 });
 
-function displayPriority(priority) {
-  let priorityText = "";
-  for (let i = 0; i < priority; i++) {
-    priorityText += "↯";
-  }
-  return priorityText;
-}
+const todosFragmentTemplateSource =
+  document.querySelector("#todo-template").innerHTML;
+const createTodosHtml = Handlebars.compile(todosFragmentTemplateSource);
 
-function createTodosHtml(todoList) {
-  return todoList
-    .map(
-      (todo) =>
-        `<li>
-        <div class="status">
-            <div class="due-date">${todo.duedate}</div>
-            <input type="checkbox" class="checkbox" disabled>${
-              todo.status ? "Completed" : "Open"
-            }</input>
-        </div>
-        <div class="content">
-            <div class="name">${todo.name}</div>
-            <div class="description">${todo.description}</div>
-        </div>
-        <div class="rating">
-            <div class="importance">${displayPriority(todo.priority)}</div>
-        </div>
-        <div class="edit">
-            <button class="edit-button" data-id="${todo.created}">Edit</button>
-        </div>
-    </li>`
-    )
-    .join("");
+function renderTodos(todoList) {
+  const todoListElement = document.querySelector("#todos");
+  todoListElement.innerHTML = createTodosHtml(todoList);
 }
 
 function filterItemsBy(items, field) {
@@ -59,22 +34,6 @@ function sortItemsBy(items, sort) {
   };
   const sortFn = sortType[typeof items[0][sort]];
   return [...items].sort((a, b) => sortFn(a[sort], b[sort]));
-}
-
-function renderTodos(todoList) {
-  const todoListElement = document.querySelector("#todos");
-  todoListElement.innerHTML = createTodosHtml(todoList);
-  const editButtons = document.querySelectorAll(".edit-button");
-  const checkboxes = document.querySelectorAll(".checkbox");
-  for (let i = 0; i < todos.length; i++) {
-    const id = Number(editButtons[i].dataset.id);
-    const todo = todos.filter(() => todo.created === id);
-    editButtons[i].addEventListener("click", () => {
-      console.log(todo);
-      // TODO
-    });
-    checkboxes[i].checked = todo[0].status;
-  }
 }
 
 const switchViewButtons = document.querySelectorAll(".switch-view");
@@ -123,7 +82,6 @@ form.addEventListener("submit", (event) => {
     duedate: duedate.value,
     status: status.value,
   };
-  console.log(message);
   todos.push(message);
   // TODO
   // message = {};
@@ -131,3 +89,53 @@ form.addEventListener("submit", (event) => {
   renderTodos(todos);
 });
 renderTodos(todos);
+
+// function createTodosHtml(todoList) {
+//   return todoList
+//     .map(
+//       (todo) =>
+//         `<li>
+//         <div class="status">
+//             <div class="due-date">${todo.duedate}</div>
+//             <input type="checkbox" class="checkbox" disabled>${
+//               todo.status ? "Completed" : "Open"
+//             }</input>
+//         </div>
+//         <div class="content">
+//             <div class="name">${todo.name}</div>
+//             <div class="description">${todo.description}</div>
+//         </div>
+//         <div class="rating">
+//             <div class="importance">${displayPriority(todo.priority)}</div>
+//         </div>
+//         <div class="edit">
+//             <button class="edit-button" data-id="${todo.created}">Edit</button>
+//         </div>
+//     </li>`
+//     )
+//     .join("");
+// }
+
+// function renderTodos(todoList) {
+//   const todoListElement = document.querySelector("#todos");
+//   todoListElement.innerHTML = createTodosHtml(todoList);
+//   const editButtons = document.querySelectorAll(".edit-button");
+//   const checkboxes = document.querySelectorAll(".checkbox");
+//   for (let i = 0; i < todos.length; i++) {
+//     const id = Number(editButtons[i].dataset.id);
+//     const todo = todos.filter(() => todo.created === id);
+//     editButtons[i].addEventListener("click", () => {
+//       console.log(todo);
+//       // TODO
+//     });
+//     checkboxes[i].checked = todo[0].status;
+//   }
+// }
+
+// function displayPriority(priority) {
+//     let priorityText = "";
+//     for (let i = 0; i < priority; i++) {
+//       priorityText += "↯";
+//     }
+//     return priorityText;
+//   }

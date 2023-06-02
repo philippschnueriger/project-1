@@ -24,7 +24,30 @@
             </div>
             <button class="filter-button" data-filter="status" id="status-button">Filter Completed</button>
         </div>
-        <ul id="todos"></ul>
+        <ul id="todos">
+          <script id="todo-template" type="text/x-handlebars-template"> 
+            {{#each this}}
+              <li>
+                <div class="status">
+                  <div class="due-date">{{duedate}}</div>
+                  <input type="checkbox" class="checkbox" disabled>
+                  {{ status}}
+                  </input>
+                </div>
+                <div class="content">
+                    <div class="name">{{name}}</div>
+                    <div class="description">{{description}}</div>
+                </div>
+                <div class="rating">
+                    <div class="importance">{{ priority}}</div>
+                </div>
+                <div class="edit">
+                    <button class="edit-button" data-id="${todo.created}">Edit</button>
+                </div>
+              </li>
+            {{/each}}
+         </script>
+        </ul>
     </div>
     <div class="new-entry hide">
         <form id="form" action="./index.html" action="POST">
