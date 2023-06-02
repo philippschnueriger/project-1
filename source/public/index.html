@@ -9,7 +9,47 @@
   <link rel="stylesheet" href="styles/index.css">
 </head>
 <body>
-<h1>Note App</h1>
+  <main>
+    <div class="overview">
+        <div class="menu">
+            <button class="switch-view">Create new todo</button>
+            <button id="theme-button">Toggle Style</button>
+        </div>
+        <div class="filter">
+            <div>
+                <button class="sort-button" data-sort-by="name">Name</button>
+                <button class="sort-button" data-sort-by="duedate">By Due Date</button>
+                <button class="sort-button" data-sort-by="created">By Creation Date</button>
+                <button class="sort-button" data-sort-by="priority">By Importance</button>
+            </div>
+            <button class="filter-button" data-filter="status" id="status-button">Filter Completed</button>
+        </div>
+        <ul id="todos"></ul>
+    </div>
+    <div class="new-entry hide">
+        <form id="form" action="./index.html" action="POST">
+            <label for="title">Title</label>
+            <input id="title" type="text" name="title" required/>
+
+            <label for="importance">Importance</label>
+            <input id="importance" type="number" name="importance" required/>
+
+            <label for="duedate" required>Duedate</label>
+            <input id="duedate" type="date" name="duedate" />
+
+            <input id="status"type="checkbox">Finished</input><br />
+
+            <label for="description">Description</label>
+            <textarea id="description" name="description"></textarea>
+            <div class="menu">
+                <button type="submit" id="create-button">Create</button>
+                <button type="submit" class="switch-view">Create & Overview</button>
+                <button type="button" class="switch-view" >Overview</button>
+            </div>
+          </form>
+    </div>
+</main>
+<script type="module" src="./src/main.js" defer></script>
 
 </body>
 </html>
