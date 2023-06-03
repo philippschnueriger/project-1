@@ -1,4 +1,6 @@
-import todoStore from "./todo-store.js";
+import todoStore from "../services/data/todo-store.js";
+import sortItemsBy from "../services/sort.js";
+import filterItemsBy from "../services/filter.js";
 
 const { todos } = todoStore;
 let sortedTodos = todos;
@@ -17,24 +19,6 @@ const createTodosHtml = Handlebars.compile(todosFragmentTemplateSource);
 function renderTodos(todoList) {
   const todoListElement = document.querySelector("#todos");
   todoListElement.innerHTML = createTodosHtml(todoList);
-}
-
-function filterItemsBy(items, field) {
-  if (filteredTodos === todos) {
-    filteredTodos = items.filter((todo) => todo[field] === true);
-    return filteredTodos;
-  }
-  return todos;
-}
-
-function sortItemsBy(items, sort) {
-  const sortType = {
-    // eslint-disable-next-line no-nested-ternary
-    string: (a, b) => (a > b ? 1 : a < b ? -1 : 0),
-    number: (a, b) => a - b,
-  };
-  const sortFn = sortType[typeof items[0][sort]];
-  return [...items].sort((a, b) => sortFn(a[sort], b[sort]));
 }
 
 const switchViewButtons = document.querySelectorAll(".switch-view");
@@ -61,7 +45,7 @@ for (const sortButton of sortButtons) {
 
 const filterButton = document.querySelector(".filter-button");
 filterButton.addEventListener("click", () => {
-  filteredTodos = filterItemsBy(todos, "status");
+  filteredTodos = filterItemsBy(todos, "status", filteredTodos);
   renderTodos(filteredTodos);
 });
 
