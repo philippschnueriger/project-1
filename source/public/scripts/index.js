@@ -11,6 +11,7 @@ themeButton.addEventListener("click", () => {
 
 const todosFragmentTemplateSource =
   document.querySelector("#todo-template").innerHTML;
+// eslint-disable-next-line no-undef
 const createTodosHtml = Handlebars.compile(todosFragmentTemplateSource);
 
 function renderTodos(todoList) {
