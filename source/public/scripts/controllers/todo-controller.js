@@ -1,8 +1,9 @@
-import todoStore from "../services/data/todo-store.js";
+import { setTodos, getTodos } from "../services/data/todo-store.js";
 import sortItemsBy from "../services/sort.js";
 import filterItemsBy from "../services/filter.js";
 
-const { todos } = todoStore;
+const todos = getTodos();
+setTodos(todos);
 let sortedTodos = todos;
 let filteredTodos = todos;
 

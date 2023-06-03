@@ -1,4 +1,4 @@
-const todos = [
+const todoTemplate = [
   {
     created: 1684663897851,
     name: "Geburi von Sarah",
@@ -25,4 +25,15 @@ const todos = [
   },
 ];
 
-export default { todos };
+export function getTodos() {
+  const todos = JSON.parse(
+    localStorage.getItem("todoStore") || JSON.stringify(todoTemplate)
+  );
+  return todos;
+}
+
+export function setTodos(todos) {
+  localStorage.setItem("todoStore", JSON.stringify(todos));
+}
+
+export default { setTodos, getTodos };
