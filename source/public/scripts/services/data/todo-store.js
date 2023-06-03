@@ -25,15 +25,16 @@ const todoTemplate = [
   },
 ];
 
-export function getTodos() {
-  const todos = JSON.parse(
-    localStorage.getItem("todoStore") || JSON.stringify(todoTemplate)
-  );
-  return todos;
-}
+const todoStore = {
+  getTodos() {
+    const todos = JSON.parse(
+      localStorage.getItem("todoStore") || JSON.stringify(todoTemplate)
+    );
+    return todos;
+  },
+  setTodos(todos) {
+    localStorage.setItem("todoStore", JSON.stringify(todos));
+  },
+};
 
-export function setTodos(todos) {
-  localStorage.setItem("todoStore", JSON.stringify(todos));
-}
-
-export default { setTodos, getTodos };
+export default todoStore;

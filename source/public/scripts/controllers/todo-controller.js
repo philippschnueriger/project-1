@@ -1,16 +1,4 @@
-import { setTodos, getTodos } from "../services/data/todo-store.js";
-import sortItemsBy from "../services/sort.js";
-import filterItemsBy from "../services/filter.js";
-
-const todos = getTodos();
-setTodos(todos);
-let sortedTodos = todos;
-let filteredTodos = todos;
-
-const themeButton = document.querySelector("#theme-button");
-themeButton.addEventListener("click", () => {
-  document.body.classList.toggle("dark-theme");
-});
+import todoService from "../services/todo-service.js";
 
 const todosFragmentTemplateSource =
   document.querySelector("#todo-template").innerHTML;
@@ -22,85 +10,81 @@ function renderTodos(todoList) {
   todoListElement.innerHTML = createTodosHtml(todoList);
 }
 
-const switchViewButtons = document.querySelectorAll(".switch-view");
-const overview = document.querySelector(".overview");
-const newentry = document.querySelector(".new-entry");
-// eslint-disable-next-line no-restricted-syntax
-for (const switchViewButton of switchViewButtons) {
-  switchViewButton.addEventListener("click", () => {
-    overview.classList.toggle("hide");
-    newentry.classList.toggle("hide");
+function showOverview() {
+  const themeButton = document.querySelector("#theme-button");
+  themeButton.addEventListener("click", () => {
+    document.body.classList.toggle("dark-theme");
+  });
+
+  const switchViewButtons = document.querySelectorAll(".switch-view");
+  const overview = document.querySelector(".overview");
+  const newentry = document.querySelector(".new-entry");
+  // eslint-disable-next-line no-restricted-syntax
+  for (const switchViewButton of switchViewButtons) {
+    switchViewButton.addEventListener("click", () => {
+      overview.classList.toggle("hide");
+      newentry.classList.toggle("hide");
+    });
+  }
+
+  const sortButtons = document.querySelectorAll(".sort-button");
+  // eslint-disable-next-line no-restricted-syntax
+  for (const sortButton of sortButtons) {
+    const { sortBy } = sortButton.dataset;
+    // eslint-disable-next-line no-loop-func
+    sortButton.addEventListener("click", () => {
+      todoService.sortItemsBy(sortBy);
+      renderTodos(todoService.sortedData);
+    });
+  }
+
+  const filterButton = document.querySelector(".filter-button");
+  filterButton.addEventListener("click", () => {
+    todoService.filterItemsBy("status");
+    renderTodos(todoService.filteredData);
+  });
+  renderTodos(todoService.data);
+}
+
+function showForm() {
+  const form = document.querySelector("#form");
+  const title = document.querySelector("#title");
+  const importance = document.querySelector("#importance");
+  const duedate = document.querySelector("#duedate");
+  const status = document.querySelector("#status");
+  const description = document.querySelector("#description");
+  const createButton = document.querySelector("#create-button");
+
+  form.addEventListener("submit", (event) => {
+    event.preventDefault();
+    const message = {
+      created: Date.now(),
+      name: title.value,
+      description: description.value,
+      priority: importance.value,
+      duedate: duedate.value,
+      status: status.value,
+    };
+    todoService.data.push(message);
+    todoService.saveData();
+    // TODO
+    // message = {};
+    createButton.innerHTML = "Update";
+    renderTodos(todoService.data);
   });
 }
 
-const sortButtons = document.querySelectorAll(".sort-button");
-// eslint-disable-next-line no-restricted-syntax
-for (const sortButton of sortButtons) {
-  const { sortBy } = sortButton.dataset;
-  // eslint-disable-next-line no-loop-func
-  sortButton.addEventListener("click", () => {
-    sortedTodos = sortItemsBy(todos, sortBy);
-    renderTodos(sortedTodos);
-  });
+function renderViews() {
+  showOverview();
+  showForm();
 }
 
-const filterButton = document.querySelector(".filter-button");
-filterButton.addEventListener("click", () => {
-  filteredTodos = filterItemsBy(todos, "status", filteredTodos);
-  renderTodos(filteredTodos);
-});
+function initialize() {
+  todoService.loadData();
+  renderViews();
+}
 
-const form = document.querySelector("#form");
-const title = document.querySelector("#title");
-const importance = document.querySelector("#importance");
-const duedate = document.querySelector("#duedate");
-const status = document.querySelector("#status");
-const description = document.querySelector("#description");
-const createButton = document.querySelector("#create-button");
-
-form.addEventListener("submit", (event) => {
-  event.preventDefault();
-  const message = {
-    created: Date.now(),
-    name: title.value,
-    description: description.value,
-    priority: importance.value,
-    duedate: duedate.value,
-    status: status.value,
-  };
-  todos.push(message);
-  // TODO
-  // message = {};
-  createButton.innerHTML = "Update";
-  renderTodos(todos);
-});
-renderTodos(todos);
-
-// function createTodosHtml(todoList) {
-//   return todoList
-//     .map(
-//       (todo) =>
-//         `<li>
-//         <div class="status">
-//             <div class="due-date">${todo.duedate}</div>
-//             <input type="checkbox" class="checkbox" disabled>${
-//               todo.status ? "Completed" : "Open"
-//             }</input>
-//         </div>
-//         <div class="content">
-//             <div class="name">${todo.name}</div>
-//             <div class="description">${todo.description}</div>
-//         </div>
-//         <div class="rating">
-//             <div class="importance">${displayPriority(todo.priority)}</div>
-//         </div>
-//         <div class="edit">
-//             <button class="edit-button" data-id="${todo.created}">Edit</button>
-//         </div>
-//     </li>`
-//     )
-//     .join("");
-// }
+initialize();
 
 // function renderTodos(todoList) {
 //   const todoListElement = document.querySelector("#todos");
