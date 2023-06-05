@@ -8,6 +8,17 @@ const createTodosHtml = Handlebars.compile(todosFragmentTemplateSource);
 function renderTodos(todoList) {
   const todoListElement = document.querySelector("#todos");
   todoListElement.innerHTML = createTodosHtml(todoList);
+  const editButtons = document.querySelectorAll(".edit-button");
+  // //const checkboxes = document.querySelectorAll(".checkbox");
+  for (let i = 0; i < todoList.length; i++) {
+    const id = Number(editButtons[i].dataset.id);
+    editButtons[i].addEventListener("click", () => {
+      todoService.setCurrentDataset(id);
+      console.log(todoService.CurrentDataset.name);
+      // TODO -> go to Overview
+    });
+    //   //checkboxes[i].checked = todo[0].status;
+  }
 }
 
 function showOverview() {

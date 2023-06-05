@@ -35,9 +35,18 @@ const todoService = {
       this.sortedData = sortedTodos;
     }
   },
+  setCurrentDataset(id) {
+    if (id === null) {
+      this.CurrentDataset = null;
+    } else {
+      const dataset = this.data.filter((todo) => todo.created === id);
+      this.CurrentDataset = dataset[0];
+    }
+  },
   data: undefined,
   filteredData: undefined,
   sortedData: undefined,
+  CurrentDataset: null,
 };
 
 export default todoService;
