@@ -28,12 +28,12 @@ function renderForm() {
   description.value = todoService.CurrentDataset.description;
 }
 
-function renderTodos() {
+function renderTodos(todoList) {
   const todoListElement = document.querySelector("#todos");
-  todoListElement.innerHTML = createTodosHtml(todoService.data);
+  todoListElement.innerHTML = createTodosHtml(todoList);
   const editButtons = document.querySelectorAll(".edit-button");
   // //const checkboxes = document.querySelectorAll(".checkbox");
-  for (let i = 0; i < todoService.data.length; i++) {
+  for (let i = 0; i < todoList.length; i++) {
     const id = Number(editButtons[i].dataset.id);
     editButtons[i].addEventListener("click", () => {
       todoService.setCurrentDataset(id);
