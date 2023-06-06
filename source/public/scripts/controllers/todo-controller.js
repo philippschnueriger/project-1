@@ -1,9 +1,31 @@
 import todoService from "../services/todo-service.js";
 
-const todosFragmentTemplateSource =
-  document.querySelector("#todo-template").innerHTML;
+const overview = document.querySelector(".overview");
+const newentry = document.querySelector(".new-entry");
+
+const form = document.querySelector("#form");
+const title = document.querySelector("#title");
+const importance = document.querySelector("#importance");
+const duedate = document.querySelector("#duedate");
+const status = document.querySelector("#status");
+const description = document.querySelector("#description");
+
+const createButton = document.querySelector("#create-button");
+const createAndOverviewButton = document.querySelector(
+  "#create-and-overview-button"
+);
+
+const todoTemplate = document.querySelector("#todo-template").innerHTML;
 // eslint-disable-next-line no-undef
-const createTodosHtml = Handlebars.compile(todosFragmentTemplateSource);
+const createTodosHtml = Handlebars.compile(todoTemplate);
+
+function renderForm() {
+  title.value = todoService.CurrentDataset.name;
+  importance.value = todoService.CurrentDataset.priority;
+  duedate.value = todoService.CurrentDataset.duedate;
+  status.value = todoService.CurrentDataset.status;
+  description.value = todoService.CurrentDataset.description;
+}
 
 function renderTodos(todoList) {
   const todoListElement = document.querySelector("#todos");
@@ -14,8 +36,11 @@ function renderTodos(todoList) {
     const id = Number(editButtons[i].dataset.id);
     editButtons[i].addEventListener("click", () => {
       todoService.setCurrentDataset(id);
-      console.log(todoService.CurrentDataset.name);
-      // TODO -> go to Overview
+      renderForm();
+      createButton.innerHTML = "Update";
+      createAndOverviewButton.innerHTML = "Update & Overview";
+      overview.classList.toggle("hide");
+      newentry.classList.toggle("hide");
     });
     //   //checkboxes[i].checked = todo[0].status;
   }
@@ -28,13 +53,19 @@ function showOverview() {
   });
 
   const switchViewButtons = document.querySelectorAll(".switch-view");
-  const overview = document.querySelector(".overview");
-  const newentry = document.querySelector(".new-entry");
+
   // eslint-disable-next-line no-restricted-syntax
   for (const switchViewButton of switchViewButtons) {
     switchViewButton.addEventListener("click", () => {
       overview.classList.toggle("hide");
       newentry.classList.toggle("hide");
+      title.value = "";
+      importance.value = "";
+      duedate.value = "";
+      status.value = "";
+      description.value = "";
+      createButton.innerHTML = "Create";
+      createAndOverviewButton.innerHTML = "Create & Overview";
     });
   }
 
@@ -58,14 +89,6 @@ function showOverview() {
 }
 
 function showForm() {
-  const form = document.querySelector("#form");
-  const title = document.querySelector("#title");
-  const importance = document.querySelector("#importance");
-  const duedate = document.querySelector("#duedate");
-  const status = document.querySelector("#status");
-  const description = document.querySelector("#description");
-  const createButton = document.querySelector("#create-button");
-
   form.addEventListener("submit", (event) => {
     event.preventDefault();
     const message = {
