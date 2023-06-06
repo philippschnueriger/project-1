@@ -1,8 +1,5 @@
 import todoService from "../services/todo-service.js";
 
-const overview = document.querySelector(".overview");
-const newentry = document.querySelector(".new-entry");
-
 const form = document.querySelector("#form");
 const title = document.querySelector("#title");
 const importance = document.querySelector("#importance");
@@ -14,6 +11,10 @@ const createButton = document.querySelector("#create-button");
 const createAndOverviewButton = document.querySelector(
   "#create-and-overview-button"
 );
+
+const switchOverview = document.querySelectorAll(".switch-overview");
+
+const formDialog = document.querySelector("dialog");
 
 const todoTemplate = document.querySelector("#todo-template").innerHTML;
 // eslint-disable-next-line no-undef
@@ -27,23 +28,33 @@ function renderForm() {
   description.value = todoService.CurrentDataset.description;
 }
 
-function renderTodos(todoList) {
+function renderTodos() {
   const todoListElement = document.querySelector("#todos");
-  todoListElement.innerHTML = createTodosHtml(todoList);
+  todoListElement.innerHTML = createTodosHtml(todoService.data);
   const editButtons = document.querySelectorAll(".edit-button");
   // //const checkboxes = document.querySelectorAll(".checkbox");
-  for (let i = 0; i < todoList.length; i++) {
+  for (let i = 0; i < todoService.data.length; i++) {
     const id = Number(editButtons[i].dataset.id);
     editButtons[i].addEventListener("click", () => {
       todoService.setCurrentDataset(id);
       renderForm();
       createButton.innerHTML = "Update";
       createAndOverviewButton.innerHTML = "Update & Overview";
-      overview.classList.toggle("hide");
-      newentry.classList.toggle("hide");
+      formDialog.showModal();
     });
     //   //checkboxes[i].checked = todo[0].status;
   }
+}
+
+function switchView() {
+  formDialog.showModal();
+  title.value = "";
+  importance.value = "";
+  duedate.value = "";
+  status.value = "";
+  description.value = "";
+  createButton.innerHTML = "Create";
+  createAndOverviewButton.innerHTML = "Create & Overview";
 }
 
 function showOverview() {
@@ -57,15 +68,7 @@ function showOverview() {
   // eslint-disable-next-line no-restricted-syntax
   for (const switchViewButton of switchViewButtons) {
     switchViewButton.addEventListener("click", () => {
-      overview.classList.toggle("hide");
-      newentry.classList.toggle("hide");
-      title.value = "";
-      importance.value = "";
-      duedate.value = "";
-      status.value = "";
-      description.value = "";
-      createButton.innerHTML = "Create";
-      createAndOverviewButton.innerHTML = "Create & Overview";
+      switchView();
     });
   }
 
@@ -89,6 +92,11 @@ function showOverview() {
 }
 
 function showForm() {
+  for (let i = 0; i < switchOverview.length; i++) {
+    switchOverview[i].addEventListener("click", () => {
+      formDialog.close();
+    });
+  }
   form.addEventListener("submit", (event) => {
     event.preventDefault();
     const message = {
@@ -99,7 +107,14 @@ function showForm() {
       duedate: duedate.value,
       status: status.value,
     };
-    todoService.data.push(message);
+    if (todoService.CurrentDataset) {
+      const objIndex = todoService.data.findIndex(
+        (obj) => obj.id === todoService.CurrentDataset.id
+      );
+      todoService.data[objIndex] = message;
+    } else {
+      todoService.data.push(message);
+    }
     todoService.saveData();
     // TODO
     // message = {};
@@ -119,6 +134,9 @@ function initialize() {
 }
 
 initialize();
+
+// implement dialog element
+// https://blog.logrocket.com/using-the-dialog-element/
 
 // function renderTodos(todoList) {
 //   const todoListElement = document.querySelector("#todos");

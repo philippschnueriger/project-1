@@ -77,3 +77,14 @@ form * {
 #status {
     width: 16px;
 }
+
+dialog {
+    height: 400px;
+    width: 700px;
+    margin: 64px auto 32px;
+    border: none;
+}
+
+dialog::backdrop {
+    background-color: white;
+}

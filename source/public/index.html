@@ -61,7 +61,7 @@
           </script>
         </ul>
       </div>
-      <div class="new-entry hide">
+      <dialog id="form-dialog">
         <form id="form" action="./index.html" method="POST">
           <label for="title">Title</label>
           <input id="title" type="text" name="title" required />
@@ -83,14 +83,14 @@
             <button
               type="submit"
               id="create-and-overview-button"
-              class="switch-view"
+              class="switch-overview"
             >
               Create & Overview
             </button>
-            <button type="button" class="switch-view">Overview</button>
+            <button type="button" class="switch-overview">Overview</button>
           </div>
         </form>
-      </div>
+      </dialog>
     </main>
     <script type="module" src="./src/main.js"></script>
   </body>
