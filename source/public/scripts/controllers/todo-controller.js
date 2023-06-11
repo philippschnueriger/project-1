@@ -34,10 +34,9 @@ function renderTodos(todoList) {
   const editButtons = document.querySelectorAll(".edit-button");
   // //const checkboxes = document.querySelectorAll(".checkbox");
   for (let i = 0; i < todoList.length; i++) {
-    const id = editButtons[i].dataset.id;
-    editButtons[i].addEventListener("click", () => {
-      todoService.getTodo(id);
-      todoService.setCurrentDataset(id);
+    const { id } = editButtons[i].dataset;
+    editButtons[i].addEventListener("click", async () => {
+      await todoService.getTodo(id);
       renderForm();
       createButton.innerHTML = "Update";
       createAndOverviewButton.innerHTML = "Update & Overview";

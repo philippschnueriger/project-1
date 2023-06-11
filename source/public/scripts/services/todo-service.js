@@ -9,7 +9,7 @@ const todoService = {
   },
   async getTodo(id) {
     const todo = await httpService.ajax("GET", `/api/todos/${id}`, undefined);
-    console.log(todo);
+    this.CurrentDataset = todo;
   },
 
   createTodo() {
