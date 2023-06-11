@@ -5,7 +5,7 @@ export class TodosStore {
     this.db =
       db ||
       new Datastore({
-        filename: "./source/server/data/todos.db",
+        filename: "./source/server/services/data/todos.db",
         autoload: true,
       });
   }

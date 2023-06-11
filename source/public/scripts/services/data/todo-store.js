@@ -31,7 +31,7 @@ const todoStore = {
   },
   getTodos() {
     const todos = JSON.parse(
-      //localStorage.getItem("todoStore") || JSON.stringify(todoTemplate)
+      // localStorage.getItem("todoStore") || JSON.stringify(todoTemplate)
       localStorage.getItem("todoStore")
     );
     return todos;
