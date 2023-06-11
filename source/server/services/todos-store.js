@@ -31,12 +31,25 @@ export class TodosStore {
     return this.db.findOne({ _id: id });
   }
 
-  async create(name, description, priority, duedate, status) {
-    const todo = new Todo(name, description, priority, duedate, status);
+  async create(body) {
+    const todo = new Todo(
+      body.name,
+      body.description,
+      body.priority,
+      body.duedate,
+      body.status
+    );
     return this.db.insert(todo);
   }
 
-  async update(id, todo) {
+  async update(id, body) {
+    const todo = new Todo(
+      body.name,
+      body.description,
+      body.priority,
+      body.duedate,
+      body.status
+    );
     await this.db.update({ _id: id }, todo);
     return this.get(id);
   }

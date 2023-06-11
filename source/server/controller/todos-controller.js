@@ -8,18 +8,10 @@ export class TodosController {
     res.json(await todosStore.get(req.params.id));
   };
   createTodo = async (req, res) => {
-    res.json(
-      await todosStore.create(
-        req.body.name,
-        req.body.description,
-        req.body.priority,
-        req.body.duedate,
-        req.body.status
-      )
-    );
+    res.json(await todosStore.create(req.body));
   };
   updateTodo = async (req, res) => {
-    res.json(await todosStore.update());
+    res.json(await todosStore.update(req.params.id, req.body));
   };
   deleteTodo = async (req, res) => {
     res.json(await todosStore.delete(req.params.id));
