@@ -1,11 +1,7 @@
-import express from "express";
+const app = (await import("./app.js")).app;
 
-const app = express();
+const hostname = "127.0.0.1";
 const port = 3000;
-
-app.use(express.static("source/public"));
-
-app.listen(port, () => {
-  // eslint-disable-next-line no-console
-  console.log(`Todo app listening at http://localhost:${port}`);
+app.listen(port, hostname, () => {
+  console.log(`Server running at http://${hostname}:${port}/`);
 });
