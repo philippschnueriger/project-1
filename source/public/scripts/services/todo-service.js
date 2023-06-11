@@ -7,6 +7,11 @@ const todoService = {
     this.filteredData = todos;
     this.sortedData = todos;
   },
+  async getTodo(id) {
+    const todo = await httpService.ajax("GET", `/api/todos/${id}`, undefined);
+    console.log(todo);
+  },
+
   createTodo() {
     httpService.ajax("POST", "/api/todos/", this.data);
   },
