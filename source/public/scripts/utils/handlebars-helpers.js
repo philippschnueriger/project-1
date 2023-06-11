@@ -4,6 +4,13 @@ Handlebars.registerHelper("times", (n, block) => {
   return accum;
 });
 
+Handlebars.registerHelper("relativeDate", (date) => {
+  const rtf1 = new Intl.RelativeTimeFormat("en", { style: "short" });
+  const today = new Date().toISOString();
+  const diff = Math.ceil((Date.parse(date) - Date.parse(today)) / 86400000);
+  return rtf1.format(diff, "days");
+});
+
 Handlebars.registerHelper("ifCond", function (v1, operator, v2, options) {
   switch (operator) {
     case "==":

@@ -42,7 +42,9 @@
             {{#each this}}
               <li>
                 <div class="status">
-                  <div class="due-date">{{duedate}}</div>
+                  <div class="due-date">
+                  {{#relativeDate duedate}} {{/relativeDate}}
+                  </div>
                   <input type="checkbox" class="checkbox" disabled {{#ifCond status '===' "true"}} checked {{/ifCond}}>
                   {{#ifCond status '===' "true"}}
                     Completed
