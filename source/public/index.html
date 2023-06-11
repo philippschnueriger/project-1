@@ -9,6 +9,7 @@
       crossorigin="anonymous"
       defer
     ></script>
+    <script src="scripts/utils/handlebars-helpers.js" defer></script>
     <script src="scripts/controllers/todo-controller.js" type="module"></script>
     <link rel="stylesheet" href="styles/index.css" />
   </head>
@@ -42,8 +43,13 @@
               <li>
                 <div class="status">
                   <div class="due-date">{{duedate}}</div>
-                  <input type="checkbox" class="checkbox" disabled>
-                  {{ status}}
+                  <input type="checkbox" class="checkbox" disabled {{#ifCond status '===' "true"}} checked {{/ifCond}}>
+                  {{#ifCond status '===' "true"}}
+                    Completed
+                  {{/ifCond}}
+                  {{#ifCond status '===' "false"}}
+                    Open
+                  {{/ifCond}}
                   </input>
                 </div>
                 <div class="content">
@@ -51,7 +57,7 @@
                     <div class="description">{{description}}</div>
                 </div>
                 <div class="rating">
-                    <div class="importance">{{ priority}}</div>
+                    <div class="importance">{{#times priority}}↯{{/times}}</div>
                 </div>
                 <div class="edit">
                   <button class="edit-button" data-id={{_id}}>Edit</button>
