@@ -26,9 +26,13 @@ const todoTemplate = [
 ];
 
 const todoStore = {
+  resetTodos() {
+    localStorage.setItem("todoStore", JSON.stringify(todoTemplate));
+  },
   getTodos() {
     const todos = JSON.parse(
-      localStorage.getItem("todoStore") || JSON.stringify(todoTemplate)
+      //localStorage.getItem("todoStore") || JSON.stringify(todoTemplate)
+      localStorage.getItem("todoStore")
     );
     return todos;
   },

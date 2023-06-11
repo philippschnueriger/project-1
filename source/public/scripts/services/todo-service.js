@@ -7,6 +7,10 @@ const todoService = {
     this.filteredData = todos;
     this.sortedData = todos;
   },
+  resetData() {
+    todoStore.resetTodos();
+    this.loadData();
+  },
   saveData() {
     todoStore.setTodos(this.data);
   },
