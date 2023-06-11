@@ -1,18 +1,14 @@
-import todoStore from "./data/todo-store.js";
+import { httpService } from "./http-service.js";
 
 const todoService = {
-  loadData() {
-    const todos = todoStore.getTodos();
+  async allTodos() {
+    const todos = await httpService.ajax("GET", "/api/todos/", undefined);
     this.data = todos;
     this.filteredData = todos;
     this.sortedData = todos;
   },
-  resetData() {
-    todoStore.resetTodos();
-    this.loadData();
-  },
-  saveData() {
-    todoStore.setTodos(this.data);
+  createTodo() {
+    httpService.ajax("POST", "/api/todos/", this.data);
   },
   filterItemsBy(filterBy) {
     const filteredTodos = this.data.filter((todo) => todo[filterBy] === true);

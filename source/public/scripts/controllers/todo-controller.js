@@ -12,8 +12,6 @@ const createAndOverviewButton = document.querySelector(
   "#create-and-overview-button"
 );
 
-const resetButton = document.querySelector("#reset-button");
-
 const switchOverview = document.querySelectorAll(".switch-overview");
 
 const formDialog = document.querySelector("dialog");
@@ -90,10 +88,6 @@ function showOverview() {
     todoService.filterItemsBy("status");
     renderTodos(todoService.filteredData);
   });
-  resetButton.addEventListener("click", () => {
-    todoService.resetData();
-    renderTodos(todoService.data);
-  });
   renderTodos(todoService.data);
 }
 
@@ -121,7 +115,7 @@ function showForm() {
     } else {
       todoService.data.push(message);
     }
-    todoService.saveData();
+    todoService.createTodo();
     // TODO
     // message = {};
     createButton.innerHTML = "Update";
@@ -134,8 +128,8 @@ function renderViews() {
   showForm();
 }
 
-function initialize() {
-  todoService.loadData();
+async function initialize() {
+  await todoService.allTodos();
   renderViews();
 }
 
