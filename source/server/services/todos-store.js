@@ -1,4 +1,17 @@
+/* eslint-disable max-classes-per-file */
 import Datastore from "nedb-promises";
+
+export class Todo {
+  constructor(name, description, priority, duedate, status) {
+    this.created = new Date();
+    this.name = name;
+    this.description = description;
+    this.priority = priority;
+    this.duedate = duedate;
+    this.status = status;
+    this.state = "OK";
+  }
+}
 
 export class TodosStore {
   constructor(db) {
@@ -12,6 +25,24 @@ export class TodosStore {
 
   async all() {
     return this.db.find({});
+  }
+
+  async get(id) {
+    return this.db.findOne({ _id: id });
+  }
+
+  async create(name, description, priority, duedate, status) {
+    const todo = new Todo(name, description, priority, duedate, status);
+    return this.db.insert(todo);
+  }
+
+  async update(id, todo) {
+    await this.db.update({ _id: id }, todo);
+    return this.get(id);
+  }
+
+  async delete(id) {
+    await this.db.remove({ _id: id });
   }
 }
 
