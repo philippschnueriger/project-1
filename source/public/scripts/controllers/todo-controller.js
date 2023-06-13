@@ -32,14 +32,13 @@ function renderForm() {
   } else {
     duedate.value = todoService.CurrentDataset.duedate;
   }
-  status.checked = todoService.CurrentDataset.status;
+  status.checked = todoService.CurrentDataset.status === "true";
   description.value = todoService.CurrentDataset.description;
 }
 
 function renderTodos(todoList) {
   todoListElement.innerHTML = createTodosHtml(todoList);
   const editButtons = document.querySelectorAll(".edit-button");
-  // //const checkboxes = document.querySelectorAll(".checkbox");
   for (let i = 0; i < todoList.length; i++) {
     const { id } = editButtons[i].dataset;
     editButtons[i].addEventListener("click", async () => {
@@ -49,7 +48,6 @@ function renderTodos(todoList) {
       createAndOverviewButton.innerHTML = "Update & Overview";
       formDialog.showModal();
     });
-    //   //checkboxes[i].checked = todo[0].status;
   }
 }
 
@@ -108,7 +106,7 @@ function showForm() {
       description: description.value,
       priority: importance.value,
       duedate: duedate.value,
-      status: status.checked,
+      status: status.checked.toString(),
     };
     if (todoService.CurrentDataset) {
       // eslint-disable-next-line no-underscore-dangle
