@@ -117,6 +117,9 @@ function showForm() {
     createButton.innerHTML = "Update";
     await todoService.allTodos();
     renderTodos(todoService.data);
+    if (event.submitter.id === "create-and-overview-button") {
+      formDialog.close();
+    }
   });
 }
 
