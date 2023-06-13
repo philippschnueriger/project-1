@@ -2,12 +2,12 @@ import todoService from "../services/todo-service.js";
 
 // BUTTONS
 const themeButton = document.querySelector("#theme-button");
-const switchOverview = document.querySelectorAll(".switch-overview");
+const switchOverviewButton = document.querySelector("#switch-overview-button");
 const createButton = document.querySelector("#create-button");
 const createAndOverviewButton = document.querySelector(
   "#create-and-overview-button"
 );
-const switchViewButtons = document.querySelectorAll(".switch-view");
+const switchViewButton = document.querySelector("#switch-form");
 
 // TODOS OVERVIEW
 const todoListElement = document.querySelector("#todos");
@@ -78,12 +78,9 @@ function showOverview() {
   themeButton.addEventListener("click", () => {
     document.body.classList.toggle("dark-theme");
   });
-  // eslint-disable-next-line no-restricted-syntax
-  for (const switchViewButton of switchViewButtons) {
-    switchViewButton.addEventListener("click", () => {
-      switchView();
-    });
-  }
+  switchViewButton.addEventListener("click", () => {
+    switchView();
+  });
 
   const sortButtons = document.querySelectorAll(".sort-button");
   // eslint-disable-next-line no-restricted-syntax
@@ -105,11 +102,9 @@ function showOverview() {
 }
 
 function showForm() {
-  for (let i = 0; i < switchOverview.length; i++) {
-    switchOverview[i].addEventListener("click", () => {
-      formDialog.close();
-    });
-  }
+  switchOverviewButton.addEventListener("click", () => {
+    formDialog.close();
+  });
   form.addEventListener("submit", async (event) => {
     event.preventDefault();
     const message = {
@@ -122,9 +117,9 @@ function showForm() {
     };
     if (todoService.CurrentDataset) {
       // eslint-disable-next-line no-underscore-dangle
-      todoService.updateTodo(message, todoService.CurrentDataset._id);
+      await todoService.updateTodo(message, todoService.CurrentDataset._id);
     } else {
-      todoService.createTodo(message);
+      await todoService.createTodo(message);
     }
     createButton.innerHTML = "Update";
     await todoService.allTodos();
