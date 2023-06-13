@@ -72,7 +72,13 @@ li {
     justify-content: end;
 }
 
-form * {
+form {
+    margin: 64px auto 32px;
+    height: 400px;
+    width: 700px;
+}
+
+form > * {
     width: 100%;
 }
 
@@ -81,9 +87,8 @@ form * {
 }
 
 dialog {
-    height: 400px;
-    width: 700px;
-    margin: 64px auto 32px;
+    width: 100vw;
+    height: 100vh;
     border: none;
     background: var(--background);
     color: var(--color);
@@ -100,4 +105,8 @@ dialog::backdrop {
     border-radius: 4px;
     text-align: center;
     padding-top: 24px;
+}
+
+.form-button {
+    width: 32%;
 }
