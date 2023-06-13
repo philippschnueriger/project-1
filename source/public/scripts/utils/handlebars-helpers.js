@@ -10,6 +10,9 @@ Handlebars.registerHelper("relativeDate", (date) => {
   const rtf1 = new Intl.RelativeTimeFormat("en", { style: "short" });
   const today = new Date().toISOString();
   const diff = Math.ceil((Date.parse(date) - Date.parse(today)) / 86400000);
+  if (diff === 0) {
+    return "today";
+  }
   return rtf1.format(diff, "days");
 });
 
