@@ -101,7 +101,7 @@ function showForm() {
       formDialog.close();
     });
   }
-  form.addEventListener("submit", (event) => {
+  form.addEventListener("submit", async (event) => {
     event.preventDefault();
     const message = {
       created: Date.now(),
@@ -112,20 +112,13 @@ function showForm() {
       status: status.checked,
     };
     if (todoService.CurrentDataset) {
-      // const objIndex = todoService.data.findIndex(
-      //   (obj) => obj.id === todoService.CurrentDataset.id
-      // );
-      // todoService.data[objIndex] = message;
-      console.log("update todo");
+      // eslint-disable-next-line no-underscore-dangle
       todoService.updateTodo(message, todoService.CurrentDataset._id);
     } else {
-      todoService.data.push(message);
-      todoService.createTodo();
+      todoService.createTodo(message);
     }
-
-    // TODO
-    // message = {};
     createButton.innerHTML = "Update";
+    await todoService.allTodos();
     renderTodos(todoService.data);
   });
 }

@@ -12,11 +12,10 @@ const todoService = {
     this.CurrentDataset = todo;
   },
 
-  createTodo() {
-    httpService.ajax("POST", "/api/todos/", this.data);
+  createTodo(todo) {
+    httpService.ajax("POST", "/api/todos/", todo);
   },
   updateTodo(todo, id) {
-    console.log(`/api/todos/${id}`);
     httpService.ajax("PATCH", `/api/todos/${id}`, todo);
   },
   filterItemsBy(filterBy) {
