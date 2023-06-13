@@ -14,6 +14,7 @@ const todoListElement = document.querySelector("#todos");
 const todoTemplate = document.querySelector("#todo-template").innerHTML;
 // eslint-disable-next-line no-undef
 const createTodosHtml = Handlebars.compile(todoTemplate);
+const noTodos = document.querySelector("#no-todos");
 
 // FORM
 const formDialog = document.querySelector("dialog");
@@ -40,6 +41,11 @@ function renderTodos(todoList) {
   todoListElement.innerHTML = createTodosHtml(todoList);
   const editButtons = document.querySelectorAll(".edit-button");
   const deleteButtons = document.querySelectorAll(".delete-button");
+  if (todoList.length === 0) {
+    noTodos.style.display = "block";
+  } else {
+    noTodos.style.display = "none";
+  }
   for (let i = 0; i < todoList.length; i++) {
     const { id } = editButtons[i].dataset;
     editButtons[i].addEventListener("click", async () => {
