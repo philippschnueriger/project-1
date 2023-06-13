@@ -1,24 +1,28 @@
 import todoService from "../services/todo-service.js";
 
+// BUTTONS
+const themeButton = document.querySelector("#theme-button");
+const switchOverview = document.querySelectorAll(".switch-overview");
+const createButton = document.querySelector("#create-button");
+const createAndOverviewButton = document.querySelector(
+  "#create-and-overview-button"
+);
+const switchViewButtons = document.querySelectorAll(".switch-view");
+
+// TODOS OVERVIEW
+const todoListElement = document.querySelector("#todos");
+const todoTemplate = document.querySelector("#todo-template").innerHTML;
+// eslint-disable-next-line no-undef
+const createTodosHtml = Handlebars.compile(todoTemplate);
+
+// FORM
+const formDialog = document.querySelector("dialog");
 const form = document.querySelector("#form");
 const title = document.querySelector("#title");
 const importance = document.querySelector("#importance");
 const duedate = document.querySelector("#duedate");
 const status = document.querySelector("#status");
 const description = document.querySelector("#description");
-
-const createButton = document.querySelector("#create-button");
-const createAndOverviewButton = document.querySelector(
-  "#create-and-overview-button"
-);
-
-const switchOverview = document.querySelectorAll(".switch-overview");
-
-const formDialog = document.querySelector("dialog");
-
-const todoTemplate = document.querySelector("#todo-template").innerHTML;
-// eslint-disable-next-line no-undef
-const createTodosHtml = Handlebars.compile(todoTemplate);
 
 function renderForm() {
   title.value = todoService.CurrentDataset.name;
@@ -33,7 +37,6 @@ function renderForm() {
 }
 
 function renderTodos(todoList) {
-  const todoListElement = document.querySelector("#todos");
   todoListElement.innerHTML = createTodosHtml(todoList);
   const editButtons = document.querySelectorAll(".edit-button");
   // //const checkboxes = document.querySelectorAll(".checkbox");
@@ -62,13 +65,9 @@ function switchView() {
 }
 
 function showOverview() {
-  const themeButton = document.querySelector("#theme-button");
   themeButton.addEventListener("click", () => {
     document.body.classList.toggle("dark-theme");
   });
-
-  const switchViewButtons = document.querySelectorAll(".switch-view");
-
   // eslint-disable-next-line no-restricted-syntax
   for (const switchViewButton of switchViewButtons) {
     switchViewButton.addEventListener("click", () => {
@@ -134,30 +133,3 @@ async function initialize() {
 }
 
 initialize();
-
-// implement dialog element
-// https://blog.logrocket.com/using-the-dialog-element/
-
-// function renderTodos(todoList) {
-//   const todoListElement = document.querySelector("#todos");
-//   todoListElement.innerHTML = createTodosHtml(todoList);
-//   const editButtons = document.querySelectorAll(".edit-button");
-//   const checkboxes = document.querySelectorAll(".checkbox");
-//   for (let i = 0; i < todos.length; i++) {
-//     const id = Number(editButtons[i].dataset.id);
-//     const todo = todos.filter(() => todo.created === id);
-//     editButtons[i].addEventListener("click", () => {
-//       console.log(todo);
-//       // TODO
-//     });
-//     checkboxes[i].checked = todo[0].status;
-//   }
-// }
-
-// function displayPriority(priority) {
-//     let priorityText = "";
-//     for (let i = 0; i < priority; i++) {
-//       priorityText += "↯";
-//     }
-//     return priorityText;
-//   }

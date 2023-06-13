@@ -27,7 +27,6 @@ const todoService = {
     }
   },
   sortItemsBy(sortBy) {
-    console.log("sort");
     const sortType = {
       // eslint-disable-next-line no-nested-ternary
       string: (a, b) => (a > b ? 1 : a < b ? -1 : 0),
@@ -41,14 +40,6 @@ const todoService = {
       this.sortedData = sortedTodos.reverse();
     } else {
       this.sortedData = sortedTodos;
-    }
-  },
-  setCurrentDataset(id) {
-    if (id === null) {
-      this.CurrentDataset = null;
-    } else {
-      const dataset = this.data.filter((todo) => todo.created === id);
-      this.CurrentDataset = dataset[0];
     }
   },
   data: undefined,
