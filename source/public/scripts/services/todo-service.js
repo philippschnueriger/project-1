@@ -15,6 +15,10 @@ const todoService = {
   createTodo() {
     httpService.ajax("POST", "/api/todos/", this.data);
   },
+  updateTodo(todo, id) {
+    console.log(`/api/todos/${id}`);
+    httpService.ajax("PATCH", `/api/todos/${id}`, todo);
+  },
   filterItemsBy(filterBy) {
     const filteredTodos = this.data.filter((todo) => todo[filterBy] === true);
     if (JSON.stringify(filteredTodos) === JSON.stringify(this.filteredData)) {

@@ -23,8 +23,12 @@ const createTodosHtml = Handlebars.compile(todoTemplate);
 function renderForm() {
   title.value = todoService.CurrentDataset.name;
   importance.value = todoService.CurrentDataset.priority;
-  duedate.value = todoService.CurrentDataset.duedate;
-  status.value = todoService.CurrentDataset.status;
+  if (todoService.CurrentDataset.duedate.length > 10) {
+    duedate.value = todoService.CurrentDataset.duedate.slice(0, 10);
+  } else {
+    duedate.value = todoService.CurrentDataset.duedate;
+  }
+  status.checked = todoService.CurrentDataset.status;
   description.value = todoService.CurrentDataset.description;
 }
 
@@ -105,17 +109,20 @@ function showForm() {
       description: description.value,
       priority: importance.value,
       duedate: duedate.value,
-      status: status.value,
+      status: status.checked,
     };
     if (todoService.CurrentDataset) {
-      const objIndex = todoService.data.findIndex(
-        (obj) => obj.id === todoService.CurrentDataset.id
-      );
-      todoService.data[objIndex] = message;
+      // const objIndex = todoService.data.findIndex(
+      //   (obj) => obj.id === todoService.CurrentDataset.id
+      // );
+      // todoService.data[objIndex] = message;
+      console.log("update todo");
+      todoService.updateTodo(message, todoService.CurrentDataset._id);
     } else {
       todoService.data.push(message);
+      todoService.createTodo();
     }
-    todoService.createTodo();
+
     // TODO
     // message = {};
     createButton.innerHTML = "Update";
