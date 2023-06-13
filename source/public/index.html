@@ -75,7 +75,14 @@
           <input id="title" type="text" name="title" required />
 
           <label for="importance">Importance</label>
-          <input id="importance" type="number" name="importance" required />
+          <input
+            id="importance"
+            type="number"
+            name="importance"
+            min="1"
+            max="5"
+            required
+          />
 
           <label for="duedate">Duedate</label>
           <input id="duedate" type="date" name="duedate" required />
