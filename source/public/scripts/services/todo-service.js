@@ -19,7 +19,7 @@ const todoService = {
     httpService.ajax("PATCH", `/api/todos/${id}`, todo);
   },
   filterItemsBy(filterBy) {
-    const filteredTodos = this.data.filter((todo) => todo[filterBy] === true);
+    const filteredTodos = this.data.filter((todo) => todo[filterBy] === "true");
     if (JSON.stringify(filteredTodos) === JSON.stringify(this.filteredData)) {
       this.filteredData = this.data;
     } else {
