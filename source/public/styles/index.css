@@ -83,8 +83,10 @@ dialog {
     width: 700px;
     margin: 64px auto 32px;
     border: none;
+    background: var(--background);
+    color: var(--color);
 }
 
 dialog::backdrop {
-    background-color: white;
+    background-color: var(--background);
 }
