@@ -39,6 +39,7 @@ function renderForm() {
 function renderTodos(todoList) {
   todoListElement.innerHTML = createTodosHtml(todoList);
   const editButtons = document.querySelectorAll(".edit-button");
+  const deleteButtons = document.querySelectorAll(".delete-button");
   for (let i = 0; i < todoList.length; i++) {
     const { id } = editButtons[i].dataset;
     editButtons[i].addEventListener("click", async () => {
@@ -47,6 +48,11 @@ function renderTodos(todoList) {
       createButton.innerHTML = "Update";
       createAndOverviewButton.innerHTML = "Update & Overview";
       formDialog.showModal();
+    });
+    deleteButtons[i].addEventListener("click", async () => {
+      await todoService.deleteTodo(id);
+      await todoService.allTodos();
+      renderTodos(todoService.data);
     });
   }
 }

@@ -12,11 +12,14 @@ const todoService = {
     this.CurrentDataset = todo;
   },
 
-  createTodo(todo) {
+  async createTodo(todo) {
     httpService.ajax("POST", "/api/todos/", todo);
   },
-  updateTodo(todo, id) {
+  async updateTodo(todo, id) {
     httpService.ajax("PATCH", `/api/todos/${id}`, todo);
+  },
+  async deleteTodo(id) {
+    httpService.ajax("DELETE", `/api/todos/${id}`, undefined);
   },
   filterItemsBy(filterBy) {
     const filteredTodos = this.data.filter((todo) => todo[filterBy] === "true");

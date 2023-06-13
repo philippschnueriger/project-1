@@ -54,7 +54,7 @@ ul {
 
 li {
     display: grid;
-    grid-template-columns: 120px 1fr 120px 64px;
+    grid-template-columns: 120px 1fr 120px 76px;
     height: 56px;
     border-bottom: 1px solid #4a4a48;
     margin-bottom: 16px;
@@ -67,7 +67,9 @@ li {
 
 .rating,
 .edit {
+    display: flex;
     justify-self: end;
+    justify-content: end;
 }
 
 form * {

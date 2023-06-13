@@ -56,6 +56,7 @@ export class TodosStore {
 
   async delete(id) {
     await this.db.remove({ _id: id });
+    return "";
   }
 }
 
