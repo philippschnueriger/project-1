@@ -13,13 +13,13 @@ const todoService = {
   },
 
   async createTodo(todo) {
-    httpService.ajax("POST", "/api/todos/", todo);
+    await httpService.ajax("POST", "/api/todos/", todo);
   },
   async updateTodo(todo, id) {
-    httpService.ajax("PATCH", `/api/todos/${id}`, todo);
+    await httpService.ajax("PATCH", `/api/todos/${id}`, todo);
   },
   async deleteTodo(id) {
-    httpService.ajax("DELETE", `/api/todos/${id}`, undefined);
+    await httpService.ajax("DELETE", `/api/todos/${id}`, undefined);
   },
   filterItemsBy(filterBy) {
     const filteredTodos = this.data.filter((todo) => todo[filterBy] === "true");

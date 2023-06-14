@@ -37,7 +37,7 @@ function renderForm() {
   description.value = todoService.CurrentDataset.description;
 }
 
-function renderTodos(todoList) {
+async function renderTodos(todoList) {
   todoListElement.innerHTML = createTodosHtml(todoList);
   const editButtons = document.querySelectorAll(".edit-button");
   const deleteButtons = document.querySelectorAll(".delete-button");
@@ -123,8 +123,9 @@ function showForm() {
     }
     createButton.innerHTML = "Update";
     await todoService.allTodos();
-    renderTodos(todoService.data);
+    await renderTodos(todoService.data);
     if (event.submitter.id === "create-and-overview-button") {
+      todoService.CurrentDataset = null;
       formDialog.close();
     }
   });
