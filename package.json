@@ -1,7 +1,7 @@
 {
-  "name": "cas-fee-projekt-1-starter-template",
+  "name": "cas-fee-projekt-1",
   "version": "1.0.0",
-  "description": "Testat template",
+  "description": "",
   "type": "module",
   "scripts": {
     "start": "node index.js",
@@ -11,7 +11,7 @@
     "eslint": "eslint \"**/*.js\"",
     "all": "npm run stylelint && npm run w3c  && npm run eslint  && node -e \"console.log('npm run all completed')\""
   },
-  "author": "Michael Gfeller",
+  "author": "Philipp Schnüriger",
   "license": "ISC",
   "devDependencies": {
     "eslint": "^8.14.0",
